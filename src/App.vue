@@ -37,6 +37,7 @@ export default {
       roverName: '',
       minDate: '',
       maxDate: '',
+      results: [],
     };
   },
   methods: {
@@ -55,7 +56,8 @@ export default {
     handleClick() {
       axios.get(`${Api}${this.roverName}/photos?earth_date=${this.date}&api_key=DEMO_KEY`)
         .then((Response) => {
-          console.log(Response);
+          this.results = Response.data.photos;
+          console.log(this.results);
         })
         .catch((e) => {
           console.log(e);
