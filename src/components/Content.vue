@@ -17,9 +17,9 @@ export default {
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400&display=swap');
 
     .contentWrapper{
-        width: 30%;
-        height: 30%;
-        background-color: rgba(255, 255, 255, 0.3);
+        width: 350px;
+        height: 350px;
+        background-color: rgba(255, 255, 255, 0.55);
         text-align: center;
         display: flex;
         justify-content: center;
@@ -35,5 +35,6 @@ export default {
     p{
         color: rgba(0, 0, 0, 1);
         font-weight: 300;
+        font-size:18px;
     }
 </style>
