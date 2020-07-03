@@ -1,11 +1,11 @@
 <template>
   <div class="rootWrapper">
-    <h1>Mars rover photos</h1>
+    <Content />
     <Background />
     <div class="searchBar">
       <Date v-model="date" :minDate="minDate" :maxDate="maxDate" @change="updateDate($event)"/>
       <Select v-model="roverName" @input="check()"/>
-      <button @click="handleClick()">click</button>
+      <button class="submitButton" @click="handleClick()">click</button>
     </div>
   </div>
 </template>
@@ -19,6 +19,8 @@ import Select from './components/selectInput.vue';
 
 import Date from './components/dateInput.vue';
 
+import Content from './components/Content.vue';
+
 const Api = 'https://api.nasa.gov/mars-photos/api/v1/rovers/';
 
 export default {
@@ -27,6 +29,7 @@ export default {
     Background,
     Select,
     Date,
+    Content,
   },
   data() {
     return {
@@ -38,14 +41,9 @@ export default {
   },
   methods: {
     check() {
-      // const month = today.getMonth() + 1;
-      // const day = today.getDate();
-      // if (month < 10) month = `0${month}`;
-      // if (day < 10) day = `0${day}`;
+      // @todo add date obj
       if (this.roverName === 'curiosity') {
         this.minDate = '2012-08-06';
-      //   this.maxDate = `${today.getFullYear()}-${month}-${day}`;
-      //   console.log(`${today.getFullYear()}-${month}-${day}`);
       } else if (this.roverName === 'opportunity') {
         this.minDate = '2004-01-25';
         this.maxDate = '2018-06-10';
@@ -71,6 +69,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400&display=swap');
   .rootWrapper{
     width: 100vw;
     height: 100vh;
@@ -83,11 +82,22 @@ export default {
     margin: 30px 0px 0px 0px;
     display: flex;
     width: 500px;
+    height: 60px;
     align-items: center;
     justify-content: space-around;
-  }
-  h1{
-    color:white;
-    margin:0px;
+    .submitButton{
+      width: 20%;
+      height: 100%;
+      font-size: 20px;
+      font-family: 'Noto Sans JP', sans-serif;
+      border: 2px solid rgb(136, 134, 134);
+      transition: all 0.3s ease-in-out;
+      &:hover{
+        background-color: rgb(172, 170, 170);
+      }
+    }
+    @media screen and (max-width:600px){
+      width: 400px;
+    }
   }
 </style>
