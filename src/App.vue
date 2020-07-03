@@ -33,13 +33,20 @@ export default {
       roverName: '',
       minDate: '',
       maxDate: '',
+      today: new Date(),
     };
   },
   methods: {
     check() {
-      console.log(this.roverName);
-      if (this.roverName === 'curiosity') this.minDate = '2012-08-06';
-      else if (this.roverName === 'opportunity') {
+      let month = this.today.getMonth() + 1;
+      let day = this.today.getDate();
+      if (month < 10) month = `0${month}`;
+      if (day < 10) day = `0${day}`;
+      if (this.roverName === 'curiosity') {
+        this.minDate = '2012-08-06';
+        this.maxDate = `${this.today.getFullYear()}-${month}-${day}`;
+        console.log(`${this.today.getFullYear()}-${month}-${day}`);
+      } else if (this.roverName === 'opportunity') {
         this.minDate = '2004-01-25';
         this.maxDate = '2018-06-10';
       } else if (this.roverName === 'spirit') {
