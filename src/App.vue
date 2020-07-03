@@ -3,13 +3,8 @@
     <h1>Mars rover photos</h1>
     <Background />
     <div class="searchBar">
-      <input type="date" v-model="date" :min="minDate" :max="maxDate" required>
-      <select v-model="roverName" @change="check()">
-          <option disabled value="">Please select rover</option>
-          <option>curiosity</option>
-          <option>opportunity</option>
-          <option>spirit</option>
-      </select>
+      <Date v-model="date" :minDate="minDate" :maxDate="maxDate" @change="updateDate($event)"/>
+      <Select v-model="roverName" @input="check()"/>
       <button @click="handleClick()">click</button>
     </div>
   </div>
@@ -20,12 +15,18 @@ import axios from 'axios';
 
 import Background from './components/Background.vue';
 
+import Select from './components/selectInput.vue';
+
+import Date from './components/dateInput.vue';
+
 const Api = 'https://api.nasa.gov/mars-photos/api/v1/rovers/';
 
 export default {
   name: 'App',
   components: {
     Background,
+    Select,
+    Date,
   },
   data() {
     return {
@@ -33,19 +34,18 @@ export default {
       roverName: '',
       minDate: '',
       maxDate: '',
-      today: new Date(),
     };
   },
   methods: {
     check() {
-      let month = this.today.getMonth() + 1;
-      let day = this.today.getDate();
-      if (month < 10) month = `0${month}`;
-      if (day < 10) day = `0${day}`;
+      // const month = today.getMonth() + 1;
+      // const day = today.getDate();
+      // if (month < 10) month = `0${month}`;
+      // if (day < 10) day = `0${day}`;
       if (this.roverName === 'curiosity') {
         this.minDate = '2012-08-06';
-        this.maxDate = `${this.today.getFullYear()}-${month}-${day}`;
-        console.log(`${this.today.getFullYear()}-${month}-${day}`);
+      //   this.maxDate = `${today.getFullYear()}-${month}-${day}`;
+      //   console.log(`${today.getFullYear()}-${month}-${day}`);
       } else if (this.roverName === 'opportunity') {
         this.minDate = '2004-01-25';
         this.maxDate = '2018-06-10';
@@ -63,6 +63,9 @@ export default {
           console.log(e);
         });
     },
+    updateDate(updatedDate) {
+      this.date = updatedDate;
+    },
   },
 };
 </script>
@@ -78,6 +81,10 @@ export default {
   }
   .searchBar{
     margin: 30px 0px 0px 0px;
+    display: flex;
+    width: 500px;
+    align-items: center;
+    justify-content: space-around;
   }
   h1{
     color:white;
