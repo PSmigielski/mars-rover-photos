@@ -11,8 +11,9 @@
     </div>
     <div class="results" >
       <p v-if="results.length === 0 && state === 1" class="notFound">there are no photos here</p>
-      <Item v-for="item in results" :item="item" :key="item.id" />
+      <Item v-for="item in results" :item="item" :key="item.id" @click.native="handleDetailsOpen(item)" />
     </div>
+    <Details v-if="detailsOpen" :item="detailsItem" @closeDetails="detailsOpen = false" />
   </div>
 </template>
 
@@ -20,6 +21,8 @@
 import axios from 'axios';
 
 import Background from './components/Background.vue';
+
+import Details from './components/Details.vue';
 
 import Item from './components/item.vue';
 
@@ -39,10 +42,15 @@ export default {
     Date,
     Content,
     Item,
+    Details,
+
   },
   data() {
     return {
+      detailsOpen: false,
+      detailsItem: null,
       date: '',
+      loading: false,
       roverName: '',
       minDate: '',
       maxDate: '',
@@ -51,6 +59,10 @@ export default {
     };
   },
   methods: {
+    handleDetailsOpen(item) {
+      this.detailsOpen = true;
+      this.detailsItem = item;
+    },
     check() {
       if (this.roverName === 'curiosity') {
         this.minDate = '2012-08-06';
@@ -64,10 +76,13 @@ export default {
       }
     },
     handleClick() {
+      this.loading = true;
       axios.get(`${Api}${this.roverName}/photos?earth_date=${this.date}&api_key=DEMO_KEY`)
         .then((Response) => {
           this.state = 1;
+          this.loading = false;
           this.results = Response.data.photos;
+          console.log(this.results);
         })
         .catch((e) => {
           console.table(e);
