@@ -26,10 +26,22 @@ export default {
 
 <style lang="scss" scoped>
     .item{
-        background-position: 50% 50%;
+        background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
         width: 300px;
         height: 300px;
+        @media screen and (max-width:769px){
+          width: 500px;
+          height: 500px;
+        }
+        @media screen and (max-width:620px){
+          width: 400px;
+          height: 400px;
+        }
+        @media screen and (max-width:500px){
+          width: 300px;
+          height: 300px;
+        }
     }
 </style>

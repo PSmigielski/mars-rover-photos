@@ -10,6 +10,7 @@
       <button class="submitButton" @click="handleClick()">click</button>
     </div>
     <div class="results" >
+      <p v-if="results.length === 0 && state === 1" class="notFound">there are no photos here</p>
       <Item v-for="item in results" :item="item" :key="item.id" />
     </div>
   </div>
@@ -51,9 +52,9 @@ export default {
   },
   methods: {
     check() {
-      // @todo add date obj
       if (this.roverName === 'curiosity') {
         this.minDate = '2012-08-06';
+        this.maxDate = '';
       } else if (this.roverName === 'opportunity') {
         this.minDate = '2004-01-25';
         this.maxDate = '2018-06-10';
@@ -66,12 +67,10 @@ export default {
       axios.get(`${Api}${this.roverName}/photos?earth_date=${this.date}&api_key=DEMO_KEY`)
         .then((Response) => {
           this.state = 1;
-          console.log(this.resultsLen);
           this.results = Response.data.photos;
-          console.log(this.results);
         })
         .catch((e) => {
-          console.log(e);
+          console.table(e);
         });
     },
     updateDate(updatedDate) {
@@ -97,6 +96,10 @@ export default {
     align-items: center;
     flex-direction: column;
     overflow-x: hidden;
+  }
+  .notFound{
+    text-align: center;
+    width: 100%;
   }
   .searchBar{
     margin: 30px 0px 0px 0px;
@@ -130,7 +133,16 @@ export default {
     justify-items: center;
     width: 80%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 20px;
+    @media screen and (max-width:1520px){
+      grid-template-columns: 1fr 1fr 1fr ;
+    }
+    @media screen and (max-width:1170px){
+      grid-template-columns: 1fr 1fr;
+    }
+    @media screen and (max-width:768px){
+      grid-template-columns: 1fr;
+    }
   }
 </style>
