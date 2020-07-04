@@ -8,8 +8,6 @@
 </template>
 
 <script>
-// import { bus } from "../main";
-
 export default {
   name: 'Select',
   props: {
@@ -32,7 +30,7 @@ export default {
   width: 40%;
   height: 100%;
   text-align: center;
-  border: 2px solid rgb(136, 134, 134);;
+  border: 2px solid rgb(136, 134, 134);
   border-left: none;
   border-right: none;
 }
